@@ -389,13 +389,25 @@ function toNaryString(num, n) {
  * @return {string}
  *
  * @example:
- *   ['/web/images/image1.png', '/web/images/image2.png']  => '/web/images/'
- *   ['/web/assets/style.css', '/web/scripts/app.js',  'home/setting.conf'] => ''
- *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
- *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
+  => '/web/images/'
+  => ''
+  => '/'
+  => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let res = '';
+
+  for (let i = 0; i < pathes[0].length; i += 1) {
+    const el = pathes[0][i];
+    if (pathes.every((item) => item[i] === el)) {
+      res += el;
+    } else {
+      const lastindex = res.lastIndexOf('/');
+      return lastindex !== -1 ? res.slice(0, lastindex + 1) : '';
+    }
+  }
+  const lastindex = res.lastIndexOf('/');
+  return lastindex !== -1 ? res.slice(0, lastindex + 1) : '';
 }
 
 /**
